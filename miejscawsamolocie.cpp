@@ -22,7 +22,7 @@ if(V[r][k]==1){
 }
 }
 
-cout<<"Rozpocznij prace z terminalem wpisujac MIEJSCE (kolumna/rzad),"<<endl<<"albo wpisz POROWNANIE spoza zakresu aby wykonac porownanie lub KONIEC aby zakonczyc prace"<<endl;
+cout<<"Rozpocznij prace z terminalem wpisujac MIEJSCE (kolumna/rzad),"<<endl<<"albo wpisz POROWNANIE aby wykonac porownanie lub KONIEC aby zakonczyc prace"<<endl;
 
 while(true){
 cin>>g;
