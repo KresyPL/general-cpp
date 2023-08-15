@@ -8,8 +8,8 @@ char A[size][size];
 int drawn = 254;
 
 void print(){
-    for(int i = 0; i < size; i++){
-        for(int j = 0; j < size; j++){
+    for(int j = size - 1; j >= 0; j--){
+        for(int i = 0; i < size; i++){
             if(A[i][j]=='#'){
                 std::cout<<char(drawn);
             } else if(A[i][j]=='@'){
@@ -30,7 +30,7 @@ void clear(){
     }
 }
 
-void draw(int x1, int y1, int x2, int y2){
+void line(int x1, int y1, int x2, int y2){
     
     double a;
     double fy;
@@ -103,23 +103,89 @@ void draw(int x1, int y1, int x2, int y2){
     }
 }
 
+void circle(int xc, int yc, int r){
+    int x = xc;
+    int y = yc + r;
+    int P;
+    int dx;
+    int dy;
+
+    while(x<=y){
+
+        dx = abs(x - xc);
+        dy = abs(y - yc);
+
+        A[x][y] = '#';
+        A[xc-dx][y] = '#';
+        A[x][yc-dy] = '#';
+        A[xc-dx][yc-dy] = '#';
+
+        A[xc+dy][yc+dx] = '#';
+        A[xc-dy][yc+dx] = '#';
+        A[xc+dy][yc-dx] = '#';
+        A[xc-dy][yc-dx] = '#';
+
+        if(P < 0){
+            P = P + 2 * x + 3;
+        } else {
+            P = P + 2 * (x - y) + 5;
+            y--;
+        }
+        x++;
+    }
+}
+
 int main(){
 
-    int vertices;
-    std::cin>>vertices;
+    char funct;
 
-    int ver[vertices][2];
+    while(1){
 
-    for(int i = 0; i < vertices; i++){
-        std::cin>>ver[i][0]>>ver[i][1];
+        std::cout<<"Enter function\n";
+
+        std::cin>>funct;
+
+        if(funct == 'p'){
+
+            std::cout<<"Enter the number of vertices\n";
+
+            int vertices;
+            std::cin>>vertices;
+
+            int ver[vertices][2];
+
+            for(int i = 0; i < vertices; i++){
+                std::cout<<"Enter X/Y of vertex:\n";
+                std::cin>>ver[i][0]>>ver[i][1];
+            }
+
+            for(int i = 0; i < vertices - 1; i++){
+                line(ver[i][0],ver[i][1],ver[i+1][0],ver[i+1][1]);
+            }
+
+            line(ver[vertices-1][0],ver[vertices-1][1],ver[0][0],ver[0][1]);
+
+        } else if(funct == 'c'){
+
+            int xc, yc, r;
+            std::cout<<"Enter X/Y of center and radius:\n";
+            std::cin>>xc>>yc>>r;
+            circle(xc, yc, r);
+
+        } else if(funct == 'r'){
+            clear();
+
+        } else if(funct == 'e'){
+            break;
+
+        }else if(funct == 'z'){
+
+        } else {
+            std::cout<<"Invalid function\n";
+
+        }
+
+        print();
     }
-
-    for(int i = 0; i < vertices - 1; i++){
-        draw(ver[i][0],ver[i][1],ver[i+1][0],ver[i+1][1]);
-    }
-
-    draw(ver[vertices-1][0],ver[vertices-1][1],ver[0][0],ver[0][1]);
-
-    print();
 
 }
